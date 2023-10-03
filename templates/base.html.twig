@@ -24,8 +24,18 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Accueil</a>
                     </li>
-              
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_location') }}">Locations</a>
                     </li>
+
+
+                     <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_formChooselocation') }}">Créer Location</a>
+                    </li>
+                
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_register') }}">inscription</a>
                     </li>
@@ -33,7 +43,7 @@
                         <a class="nav-link" href="{{ path('app_login') }}">connexion</a>
                     </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{#{{ path('app_logout') }}#}">déconnexion</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">déconnexion</a>
                     </li>
                     <li>
                      

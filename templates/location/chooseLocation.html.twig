@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} nouvelle location{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle location</h1>
+<a href="{{ path('app_createLocation', {'typeLocation': 'Boat'}) }}" class="btn btn-primary">Boat</a>
+<a href="{{ path('app_createLocation', {'typeLocation': 'Appart'}) }}" class="btn btn-secondary">Appart</a>
+<a href="{{ path('app_createLocation', {'typeLocation': 'House'}) }}" class="btn btn-success">House</a>
+<a href="{{ path('app_createLocation', {'typeLocation': 'House'}) }}" class="btn btn-success">TreeHouse</a>
+
+
+
+  
+
+
+
+{% endblock %}

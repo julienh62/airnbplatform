@@ -47,6 +47,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastname = null;
 
    
+   /* public function __toString()
+    {
+    return $this->getUser(); 
+    }*/
+
 
     public function __construct()
     {

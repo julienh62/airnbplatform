@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListlocationController!{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+     <h1>List of locations</h1>
+   
+
+
+    <ul>
+        {% for location in locations %}
+            <li>
+              <h2>Type de logement : {{ location.getClassName() }}</h2>
+              <h2>description: {{ location.description }}</h2>
+              <h2>nbrRoom : {{ location.nbrRoom }}</h2>
+              <h2>Surface : {{ location.area }}</h2>
+              <h2>Prix/nuit:  {{ location.nightPrice  }}</h2>
+              <h2>Adresse : {{ location.address }}</h2>
+              <h2>Ville : {{ location.city }}</h2>
+         </li>
+               
+
+           
+      
+    </ul>
+
+      {% if app.user is not null %}
+        {% if app.user.id == location.user.id %}
+            <a href="{{ path('location-edit', {'id': location.id}) }}">Modifier Post</a>
+            <a href="{{ path('location-remove', {'id': location.id}) }}">Supprimer Post</a>
+        {% endif %}
+    {% endif %}
+ {% endfor %}
+{% endblock %}
+
+
+
+
+
+

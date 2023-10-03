@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\LocationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ReflectionClass;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LocationRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 #[ORM\InheritanceType('JOINED')]
@@ -69,6 +70,12 @@ abstract class Location
 
         return $this;
     }
+    /* permet de recuper typelocation */
+    public function getClassName(){
+        $class = new ReflectionClass($this);
+         
+        return $class->getShortName();
+     }
 
     public function getNbrRoom(): ?int
     {
