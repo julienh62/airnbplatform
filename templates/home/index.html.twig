@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}airnb
+{% endblock %}
+
+{% block body %}
+
+   
+	<div>
+         {% if user is defined and user is not null %}
+        <h1>Bienvenue {{ user.firstname }} !</h1>
+               {% else %}
+              <h1>Bienvenue, sur la platefome de location !</h1>
+              <p><a href="{{ path('app_register') }}">Inscrivez-vous</a> pour profiter de toutes les fonctionnalités.</p>
+              {% endif %}
+	</div>
+
+ 
+
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    </body>
+</html>
+{% endblock %}
