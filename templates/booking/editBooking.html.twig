@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Location{% endblock %}
+{% block title %}Edit booking{% endblock %}
 
 {% block body %}
-    <h1>Edit Location</h1>
+    <h1>Edit booking</h1>
 
      {{ form_start(form) }}
     {{form_rest(form) }}
@@ -15,7 +15,3 @@
 {% endblock %}
 
 
- {% block javascripts %}
-    {{ parent() }}
-    <script src="/assets/js/apilocation.js" defer></script>
-{% endblock %}

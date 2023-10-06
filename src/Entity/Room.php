@@ -22,8 +22,8 @@ class Room
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'room', targetEntity: RoomDetail::class)]
-    private Collection $rooms;
+    #[ORM\OneToMany(mappedBy: 'room', targetEntity: RoomDetail::class, cascade:['persist'])]
+    private Collection $roomDetails;
 
     #[ORM\ManyToOne(inversedBy: 'rooms')]
     #[ORM\JoinColumn(nullable: false)]
@@ -31,7 +31,7 @@ class Room
 
     public function __construct()
     {
-        $this->rooms = new ArrayCollection();
+        $this->roomDetails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,27 +66,27 @@ class Room
     /**
      * @return Collection<int, RoomDetail>
      */
-    public function getRooms(): Collection
+    public function getRoomDetails(): Collection
     {
-        return $this->rooms;
+        return $this->roomDetails;
     }
 
-    public function addRoom(RoomDetail $room): static
+    public function addRoomDetail(RoomDetail $roomDetail): static
     {
-        if (!$this->rooms->contains($room)) {
-            $this->rooms->add($room);
-            $room->setRoom($this);
+        if (!$this->roomDetails->contains($roomDetail)) {
+            $this->roomDetails->add($roomDetail);
+            $roomDetail->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeRoom(RoomDetail $room): static
+    public function removeRoomDetail(RoomDetail $roomDetail): static
     {
-        if ($this->rooms->removeElement($room)) {
+        if ($this->roomDetails->removeElement($roomDetail)) {
             // set the owning side to null (unless already changed)
-            if ($room->getRoom() === $this) {
-                $room->setRoom(null);
+            if ($roomDetail->getRoom() === $this) {
+                $roomDetail->setRoom(null);
             }
         }
 

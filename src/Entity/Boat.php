@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\BoatRepository;
+use Assert\When;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BoatRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BoatRepository::class)]
 class Boat extends Location
@@ -16,6 +18,18 @@ class Boat extends Location
     #[ORM\Column]
     private ?int $roofHeight = null;
 
+    #[When(
+        expression: 'this.isIsMoving() === true',
+        constraints: [
+            new Assert\Positive(),
+        ],
+    )]
+    #[Assert\When(
+        expression: 'this.isIsMoving() === false',
+        constraints: [
+            new Assert\Blank,
+        ],
+    )]
     #[ORM\Column]
     private ?bool $isMoving = null;
 

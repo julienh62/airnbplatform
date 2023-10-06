@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Location;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -18,21 +20,16 @@ class LocationController extends AbstractController
     public function index(LocationRepository $locationRepository): Response
     {
         $locations = $locationRepository->findAll();
-    
+        
         
         return $this->render('location/index.html.twig', [
-            'locations' => $locations,
-            
-            
+            'locations' => $locations,          
         ]);
     }
 
     #[Route('/createLocationChoose', name: 'app_formChooselocation')]
     public function chooseLocationForm(): Response
     {
-       
-        
-        
         return $this->render('location/chooseLocation.html.twig');
     }
 
@@ -40,8 +37,6 @@ class LocationController extends AbstractController
     #[Route('/createLocation/{typeLocation}', name: 'app_createLocation')]
     public function create( Request $request, EntityManagerInterface $em, string $typeLocation): Response
     {
-
-       
 
        $location = new ("App\\Entity\\".$typeLocation)();
 
@@ -61,7 +56,7 @@ class LocationController extends AbstractController
      $form->handleRequest($request);
 
           if ($form->isSubmitted() && $form->isValid()) { 
-    
+            
 
 
          // Enregistrez les modifications dans la base de données
@@ -79,7 +74,7 @@ class LocationController extends AbstractController
 
  }
 
-//#[Security("is_granted('ROLE_USER') and location.getUser() == user")] 
+ //#[Security("is_granted('ROLE_USER') and location.getUser() == user")] 
  //#[IsGranted("post-remove", "post")] 
  #[Route('/edit/{id}', name: 'location-edit')]
  public function update(Request $request, EntityManagerInterface $em, Location $location): Response
@@ -118,6 +113,8 @@ class LocationController extends AbstractController
 
 
 }
+
+
 
 
 }

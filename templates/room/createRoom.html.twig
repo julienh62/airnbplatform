@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} nouvelle room{% endblock %}
+
+{% block body %}
+    <h1>Créer nouvelle room</h1>
+
+    <div class="example-wrapper" id="roomForm" data-prototype='{{ form_widget(form.roomDetails.vars.prototype)}}<button class="removeBed btn-danger btn" type="button">Supprimer le lit</button>' data-index='{{   form.roomDetails|length }}'>
+        {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            <div>
+                {{ form_errors(form)  }}
+            </div>
+
+            <div id ="beds">
+                {% for roomDetail in form.roomDetails %}
+                    <div>
+                        {{ form_row(roomDetail.quantity) }} 
+                        {{ form_row(roomDetail.bed) }} 
+                        <button class="btn-dark btn removeBed" type="button">Supprimer lit</button>   
+                    </div>
+                {% endfor %}
+            </div>
+
+            {{form_rest(form) }}
+            <button class="btn-dark btn" id="addBed" type="button">Ajouter lit</button>
+            <button class="btn-dark btn" type="submit">Créer</button>
+
+        {{ form_end(form) }}
+
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+     {{ parent() }}
+
+
+ 
+</script>    
+<script defer src='{{ asset("assets/js/sousmenuroom.js")}}'></script>
+  
+
+{% endblock %}

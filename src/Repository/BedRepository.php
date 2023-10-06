@@ -21,6 +21,8 @@ class BedRepository extends ServiceEntityRepository
         parent::__construct($registry, Bed::class);
     }
 
+  
+
 //    /**
 //     * @return Bed[] Returns an array of Bed objects
 //     */

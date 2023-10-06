@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListPostController!{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+     <h1>List of Rooms</h1>
+   
+
+
+    <ul>
+        {% for room in rooms %}
+            <li>
+              <h2>{{ room.description }}</h2>
+              <h2>{{ room.name }}</h2>  
+            </li>
+               
+
+         
+           
+        {% endfor %}
+    </ul>
+   
+
+{% endblock %}
+
+
+  
+
+
+

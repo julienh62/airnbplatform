@@ -7,14 +7,70 @@
 
    
 	<div>
-       {% if user is defined and user is not null %}
-        <h1>Bienvenue {{ user.firstname }} !</h1>
+        {% if user is defined and user is not null %}
+          <h1>Bienvenue {{ user.firstname }} !</h1>
                {% else %}
-              <h1>Bienvenue, visiteur !</h1>
-              <p><a href="{{ path('app_register') }}">Inscrivez-vous</a> pour profiter de toutes les fonctionnalités.</p>
-              {% endif %}
+                 <h1>Bienvenue, visiteur !</h1>
+                 <p><a href="{{ path('app_register') }}">Inscrivez-vous</a> pour profiter de toutes les fonctionnalités.</p>
+        {% endif %}
+    </div>
+   
 
-	</div>
+        
+       <div class="container-fluid py-5">
+            <form action="{{path("search_housing")}}"class="row g-3">
+                <div class="col-md-3">
+                    <label for="where" class="form-label">Where ?</label>
+                    <input type="text" class="form-control" id="where" name="where">
+                </div>
+                <div class="col-md-2">
+                    <label for="begin" class="form-label">When ?</label>
+                    <input type="date" class="form-control" id="begin" name="begin">
+                </div>
+                <div class="col-md-2">
+                    <label for="end" class="form-label">Until ?</label>
+                    <input type="date" class="form-control" id="end" name="end">
+                </div>
+                <div class="col-md-2">
+                    <label for="people" class="form-label">Combien ?</label>
+                    <input type="number" class="form-control" id="people" name="people">
+                </div>
+
+                <div class="col-3 d-flex">
+                    <button type="submit" id="ok" class="mt-auto btn btn-dark">Chercher</button>
+                </div>
+            </form>
+        </div>
+        
+        <ul>
+            {% for line in locations %}
+                  {% set dist = line["dist"] | round %}
+                  {% set location = line[0]  %}
+            
+                 <li>
+                    <h2> Distance {{ dist }} km</h2>
+                    <h2> {{ location.description }}</h2>
+                    <h2>nbrRoom : {{ location.nbrRoom }}</h2>
+                    <h2>Surface : {{ location.area }}</h2>
+                    <h2>Prix/nuit:  {{ location.nightPrice  }}</h2>
+                    <h2>Adresse : {{ location.address }}</h2>
+                    <h2>Ville : {{ location.city }}</h2>
+                    <h2>Capacité de couchage : {{ location.getTotalCapacity() }}</h2>
+                    <a href="{{ path('app_createBooking', {'location': location.id}) }}"class="btn btn-secondary">Réserver</a>
+                </li>
+
+               
+        </ul>
+            {% if app.user is not null %}
+              {% if app.user.id == location.user.id %}
+               <a href="{{ path('location-edit', {'id': location.id}) }}" class="btn btn-primary">Modifier Location</a>
+               <a href="{{ path('create_room', {'location': location.id}) }}" class="btn btn-success">Ajouter room</a>
+                <a href="{{ path('location-remove', {'id': location.id}) }}" class="btn btn-danger">Supprimer Location</a>
+              {% endif %}
+            {% endif %} 
+
+        {% endfor %}
+     
 
  
 

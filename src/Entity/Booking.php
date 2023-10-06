@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\BookingRepository;
+use Assert\GreaterThan;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BookingRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
@@ -14,9 +16,11 @@ class Booking
     #[ORM\Column]
     private ?int $id = null;
 
+    #[GreaterThan(propertyPath:"beginDate", message:"Error")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateStart = null;
 
+    #[Assert\GreaterThan(propertyPath:"beginDate", message:"Error")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateEnd = null;
 

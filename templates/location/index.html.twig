@@ -20,21 +20,26 @@
               <h2>Prix/nuit:  {{ location.nightPrice  }}</h2>
               <h2>Adresse : {{ location.address }}</h2>
               <h2>Ville : {{ location.city }}</h2>
-         </li>
-               
+              <h2>Capacité de couchage : {{ location.getTotalCapacity() }}</h2>
+              <a href="{{ path('app_createBooking', {'location': location.id}) }}"class="btn btn-secondary">Réserver</a>
+            </li>
+    
+            {% if app.user is not null %}
+              {% if app.user.id == location.user.id %}
+                <a href="{{ path('location-edit', {'id': location.id}) }}" class="btn btn-primary">Modifier Location</a>
+                <a href="{{ path('location-remove', {'id': location.id}) }}" class="btn btn-danger">Supprimer Location</a>
+                <a href="{{ path('create_room', {'location': location.id}) }}" class="btn btn-success">Ajouter room</a>
+                
+                   
+              {% endif %}
+            {% endif %} 
 
-           
-      
-    </ul>
-
-      {% if app.user is not null %}
-        {% if app.user.id == location.user.id %}
-            <a href="{{ path('location-edit', {'id': location.id}) }}">Modifier Post</a>
-            <a href="{{ path('location-remove', {'id': location.id}) }}">Supprimer Post</a>
-        {% endif %}
-    {% endif %}
- {% endfor %}
+        {% endfor %}
+    </ul>    
+        
 {% endblock %}
+
+ 
 
 
 

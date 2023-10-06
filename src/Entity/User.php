@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
     return $this->getUser(); 
     }*/
-
+    
 
     public function __construct()
     {

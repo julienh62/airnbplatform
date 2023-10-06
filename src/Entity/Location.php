@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use Assert\Length;
+use Assert\NotBlank;
 use ReflectionClass;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\InheritanceType('JOINED')]
@@ -21,12 +24,16 @@ abstract class Location
     #[ORM\Column]
     private ?int $id = null;
 
+    #[NotBlank(message: "L'adresse  est requise.")]
+    #[Length(min: 10, maxMessage: "L'adresse doit faire au moins {{ limit }} caractères.")]
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
     #[ORM\Column]
     private ?int $nbrRoom = null;
 
+    #[Assert\NotBlank(message: "Une description est requise.")]
+    #[Assert\Length(min: 10, maxMessage: "La description ne doit pas dépasser {{ limit }} caractères.")]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -35,6 +42,12 @@ abstract class Location
 
     #[ORM\Column]
     private ?int $area = null;
+
+    #[ORM\Column]
+    private ?int $longitude = null;
+
+    #[ORM\Column]
+    private ?int $latitude = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
@@ -89,6 +102,7 @@ abstract class Location
         return $this;
     }
 
+    
     public function getDescription(): ?string
     {
         return $this->description;
@@ -124,6 +138,32 @@ abstract class Location
 
         return $this;
     }
+
+    public function getLongitude(): ?int
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(int $longitude): static
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?int
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(int $latitude): static
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+
 
     public function getCity(): ?string
     {
@@ -208,4 +248,18 @@ abstract class Location
 
         return $this;
     }
+
+    public function getTotalCapacity(): int
+    {
+        $capacity = 0;
+          foreach ($this->getRooms() as $room) {
+          foreach ($room->getRoomDetails() as $detail) {
+                $capacity += ($detail->getQuantity() * $detail->getBed()?->getCapacity());
+            
+        } 
+    }
+        
+        return $capacity;
+    }
+
 }
