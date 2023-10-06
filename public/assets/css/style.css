@@ -18,3 +18,7 @@ body {
   text-align: center; /* Center the content horizontally */
   margin-top: auto; /* Push the footer to the bottom of the container */
 }
+
+.containerchooselogement {
+  max-height:500px;
+}

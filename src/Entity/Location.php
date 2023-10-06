@@ -29,6 +29,8 @@ abstract class Location
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
+
+
     #[ORM\Column]
     private ?int $nbrRoom = null;
 
@@ -60,6 +62,15 @@ abstract class Location
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Room::class)]
     private Collection $rooms;
+
+   
+    
+    private ?\DateTimeInterface $dateStart = null;
+
+    #[Assert\GreaterThan(propertyPath:"beginDate", message:"Error")]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThan('today UTC')]
+    private ?\DateTimeInterface $dateEnd = null;
 
     public function __construct()
     {
@@ -245,6 +256,31 @@ abstract class Location
                 $room->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+
+    public function getDateStart(): ?\DateTimeInterface
+    {
+        return $this->dateStart;
+    }
+
+    public function setDateStart(\DateTimeInterface $dateStart): static
+    {
+        $this->dateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->dateEnd;
+    }
+
+    public function setDateEnd(\DateTimeInterface $dateEnd): static
+    {
+        $this->dateEnd = $dateEnd;
 
         return $this;
     }

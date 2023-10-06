@@ -9,6 +9,8 @@
     </form>
 
     <ul>
+    
+
         {% if locations is empty %}
             <p>No results found.</p>
         {% else %}
@@ -21,7 +23,8 @@
                   <h2>Prix/nuit:  {{ location.nightPrice  }}</h2>
                   <h2>Adresse : {{ location.address }}</h2>
                   <h2>Ville : {{ location.city }}</h2>
-                  
+                  <h2>Disponibilité du : {{ location.datestart | date('Y-m-d') }} au {{ location.dateend | date('Y-m-d')}}</h2>
+              <a href="{{ path('app_createBooking', {'location': location.
               </li>
             {% endfor %}
         {% endif %}

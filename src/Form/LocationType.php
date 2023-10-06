@@ -3,16 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Location;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+
 
 
 class LocationType extends AbstractType
@@ -51,6 +54,12 @@ class LocationType extends AbstractType
                }
             )
             ->add('address')
+            ->add('dateStart', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('dateEnd', DateType::class, [
+                'widget' => 'single_text',
+            ])
         
         /*    ->addEventListener(
                 FormEvents::SUBMIT, 

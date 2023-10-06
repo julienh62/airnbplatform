@@ -40,6 +40,7 @@ class LocationRepository extends ServiceEntityRepository
 */
 
 
+   
    /**
      * @return Location[] Returns an array of Bed objects
      */
@@ -67,6 +68,62 @@ class LocationRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+
+
+
+
+
+
+
+
+   /**
+     * @return Location[] Returns an array of Bed objects
+     */
+ /*   public function findLocations($city, $capacity, $dateA=null, $dateB=null): array
+    {
+        $conn=$this->getEntityManager()->getConnection();
+        $sql = 'SELECT ville_departement, ville_nom_simple, ville_latitude_deg, ville_longitude_deg 
+        FROM spec_villes_france_free
+        WHERE ville_nom_simple like :param';
+        $request = $conn->prepare($sql);
+        $resultSet  = $request->executeQuery(['param' => '%'.$city.'%']);
+        $results = $resultSet->fetchAssociative();
+
+        
+        $qb = $this->createQueryBuilder('l')
+            ->addSelect("ACOS(SIN(PI()*l.latitude/180.0)*SIN(PI()*:lat2/180.0)+COS(PI()*l.latitude/180.0)*COS(PI()*:lat2/180.0)*COS(PI()*:lon2/180.0-PI()*l.longitude/180.0))*6371 AS dist")
+            ->join('l.rooms', 'r') 
+            ->join('r.roomDetails', 'rd')  
+            ->join('rd.bed', 'rdb')
+            ->orderBy("dist")
+            ->groupBy('l.id')
+            ->andhaving('SUM(rd.quantity * rdb.capacity) >= :capacity')
+            ->setParameter('lat2', $results["ville_latitude_deg"])
+            ->setParameter('lon2',$results["ville_longitude_deg"])
+            ->setParameter('capacity', $capacity);
+
+        if($dateA && $dateB) {
+        $qbDate = $this->createQueryBuilder('l2')
+             ->join('l2.bookings', 'b') 
+             ->where(':dateA < b.dateEnd')
+             ->andWhere(":dateB > b.dateStart") 
+             //meme ecriture pour autre type de langage bdd
+             //gt pour greater than
+             ->andWhere($qb->expr()->gt($dateB, "b.dateStart"));
+
+             //on reprend requete QB requete imbriquéé 
+             //on exclut les logements non disponibles
+             //expr est un outil de doctrine
+             $qb->where($qb->expr()->notIn('l.id', $qbDate->getDQL()))
+                ->setParameter("dateA", $dateA)
+                ->setParameter("dateB", $dateB);
+          } 
+            
+         return $qb->getQuery()
+            ->getResult();
+        ;
+    }  */
 
 
 

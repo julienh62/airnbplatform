@@ -16,11 +16,13 @@ class Booking
     #[ORM\Column]
     private ?int $id = null;
 
-    #[GreaterThan(propertyPath:"beginDate", message:"Error")]
+   
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateStart = null;
 
+    
     #[Assert\GreaterThan(propertyPath:"beginDate", message:"Error")]
+    #[Assert\GreaterThan('today UTC')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateEnd = null;
 
